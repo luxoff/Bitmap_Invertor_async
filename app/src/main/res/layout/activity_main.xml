@@ -8,5 +8,42 @@
     android:orientation="vertical"
     android:gravity="center">
 
+    <ImageView
+        android:id="@+id/iv_image"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        android:src="@drawable/img_autumn"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/to_invert_the_image"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
+        android:textAlignment="center"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp">
+        <Button
+            android:id="@+id/btn_invert_async_task"
+            android:layout_width="185dp"
+            android:layout_height="wrap_content"
+            android:text="@string/invert_with_async_task"
+            android:layout_marginEnd="15dp"
+            android:textSize="13sp"/>
+        <Button
+            android:id="@+id/btn_invert_thread_handler"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="@string/invert_with_thread_and_handler"
+            android:textSize="13sp"
+            android:backgroundTint="@color/teal_700"/>
+    </LinearLayout>
 
 </LinearLayout>
