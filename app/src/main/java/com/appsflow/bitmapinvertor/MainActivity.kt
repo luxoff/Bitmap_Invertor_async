@@ -16,6 +16,24 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        val progressDialog = Dialog(this@MainActivity)
+        progressDialog.setContentView(R.layout.progress_bar)
+
+        binding.apply {
+
+            btnInvertAsyncTask.setOnClickListener {
+                val bitmap = ivImage.drawable.toBitmap()
+
+                val task = InvertBitmapAsyncTask(progressDialog)
+                val invertedBitmap = task.execute(bitmap).get()
+
+                ivImage.setImageBitmap(invertedBitmap)
+            }
+
+            btnInvertThreadHandler.setOnClickListener {
+
+            }
+        }
     }
 
 }
