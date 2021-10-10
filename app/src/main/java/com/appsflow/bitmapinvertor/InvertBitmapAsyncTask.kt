@@ -28,7 +28,7 @@ public class InvertBitmapAsyncTask(progressBar: Dialog) : AsyncTask<Bitmap, Void
     }
 
     // extension function to invert bitmap colors
-    fun Bitmap.invertColors(): Bitmap {
+    private fun Bitmap.invertColors(): Bitmap {
         val bitmap = Bitmap.createBitmap(
             width,
             height,

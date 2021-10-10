@@ -20,7 +20,6 @@ class MainActivity : AppCompatActivity() {
         progressDialog.setContentView(R.layout.progress_bar)
 
         binding.apply {
-
             btnInvertAsyncTask.setOnClickListener {
                 val bitmap = ivImage.drawable.toBitmap()
 
@@ -30,10 +29,59 @@ class MainActivity : AppCompatActivity() {
                 ivImage.setImageBitmap(invertedBitmap)
             }
 
-            btnInvertThreadHandler.setOnClickListener {
-
+            btnInvertThread.setOnClickListener {
+                progressDialog.show()
+                val bitmap = ivImage.drawable.toBitmap()
+                val task = MyRunnable(bitmap)
+                val thread = Thread(task)
+                thread.start()
+                thread.join()
+                val invertedBitmap = task.getBitmap()
+                ivImage.setImageBitmap(invertedBitmap)
+                progressDialog.dismiss()
             }
         }
+
     }
 
+    class MyRunnable(private var bitmap: Bitmap) : Runnable {
+
+        override fun run() {
+            bitmap = bitmap.invertColors()
+        }
+
+        fun getBitmap(): Bitmap {
+            return bitmap
+        }
+        // extension function to invert bitmap colors
+        private fun Bitmap.invertColors(): Bitmap {
+            val bitmap = Bitmap.createBitmap(
+                width,
+                height,
+                Bitmap.Config.ARGB_8888
+            )
+
+            val matrixInvert = ColorMatrix().apply {
+                set(
+                    floatArrayOf(
+                        -1.0f, 0.0f, 0.0f, 0.0f, 255.0f,
+                        0.0f, -1.0f, 0.0f, 0.0f, 255.0f,
+                        0.0f, 0.0f, -1.0f, 0.0f, 255.0f,
+                        0.0f, 0.0f, 0.0f, 1.0f, 0.0f
+                    )
+                )
+            }
+
+            val paint = Paint()
+            ColorMatrixColorFilter(matrixInvert).apply {
+                paint.colorFilter = this
+            }
+
+            Canvas(bitmap).drawBitmap(this, 0f, 0f, paint)
+            return bitmap
+        }
+    }
 }
+
+
+
