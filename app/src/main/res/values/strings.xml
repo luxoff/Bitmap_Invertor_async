@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Bitmap Invertor</string>
+    <string name="to_invert_the_image">To invert the image press one of the buttons\ndepending on desired type of background work</string>
+    <string name="invert_with_async_task">Invert with Async Task</string>
+    <string name="invert_with_thread">Invert with Thread</string>
+    <string name="set_original_image">Set original image</string>
+</resources>
