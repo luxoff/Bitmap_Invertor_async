@@ -8,8 +8,10 @@ import android.widget.ProgressBar
 import com.appsflow.bitmapinvertor.databinding.ProgressBarBinding
 import java.lang.Exception
 
-public class InvertBitmapAsyncTask(progressBar: Dialog) : AsyncTask<Bitmap, Void, Bitmap>() {
+public class InvertBitmapAsyncTask(progressBar: Dialog, width: Int, height: Int) : AsyncTask<Bitmap, Void, Bitmap>() {
     val progressBarDialog = progressBar
+    val width = width
+    val height = height
     override fun onPreExecute() {
         super.onPreExecute()
 
@@ -18,7 +20,7 @@ public class InvertBitmapAsyncTask(progressBar: Dialog) : AsyncTask<Bitmap, Void
 
     override fun doInBackground(vararg params: Bitmap): Bitmap {
         val bitmap :Bitmap = params[0]
-        return bitmap.invertColors()
+        return bitmap.invertColors(width, height)
     }
 
     override fun onPostExecute(result: Bitmap) {
@@ -28,7 +30,7 @@ public class InvertBitmapAsyncTask(progressBar: Dialog) : AsyncTask<Bitmap, Void
     }
 
     // extension function to invert bitmap colors
-    private fun Bitmap.invertColors(): Bitmap {
+    private fun Bitmap.invertColors(width: Int, height: Int): Bitmap {
         val bitmap = Bitmap.createBitmap(
             width,
             height,

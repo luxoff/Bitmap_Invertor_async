@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
             btnInvertAsyncTask.setOnClickListener {
                 val bitmap = ivImage.drawable.toBitmap()
 
-                val task = InvertBitmapAsyncTask(progressDialog)
+                val task = InvertBitmapAsyncTask(progressDialog, ivImage.width, ivImage.height)
                 val invertedBitmap = task.execute(bitmap).get()
 
                 ivImage.setImageBitmap(invertedBitmap)
@@ -31,30 +31,34 @@ class MainActivity : AppCompatActivity() {
 
             btnInvertThread.setOnClickListener {
                 progressDialog.show()
+
                 val bitmap = ivImage.drawable.toBitmap()
-                val task = MyRunnable(bitmap)
+                val task = MyRunnable(bitmap, ivImage.width, ivImage.height)
                 val thread = Thread(task)
                 thread.start()
                 thread.join()
                 val invertedBitmap = task.getBitmap()
                 ivImage.setImageBitmap(invertedBitmap)
+
                 progressDialog.dismiss()
             }
         }
 
     }
 
-    class MyRunnable(private var bitmap: Bitmap) : Runnable {
+    class MyRunnable(private var bitmap: Bitmap, width: Int, height: Int) : Runnable {
+        val width = width
+        val height = height
 
         override fun run() {
-            bitmap = bitmap.invertColors()
+            bitmap = bitmap.invertColors(width, height)
         }
 
         fun getBitmap(): Bitmap {
             return bitmap
         }
         // extension function to invert bitmap colors
-        private fun Bitmap.invertColors(): Bitmap {
+        private fun Bitmap.invertColors(width: Int, height: Int): Bitmap {
             val bitmap = Bitmap.createBitmap(
                 width,
                 height,
